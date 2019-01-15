@@ -48,23 +48,23 @@ class UltimateTicTacToe(Game):
         for i in win_resul:
             (x, y, z) = i
             square_x = square[x]
-            if(square_x == square[y] == square[z]) and (square[x] != 'L'):
+            if(square_x == square[y] == square[z]) and (square[x] != 'F'):
                 return square_x
-        return 'L'
+        return 'F'
 
     ## verifica se há vencedor no tabuleiro
     def big_win(board):
         for i in win_resul:
             (x, y, z) = i
             small_x = small_win(board[x])
-            if(small_x == small_win(board[y]) == small_win(board[z])) and (small_win(board[x]) != 'L'):
+            if(small_x == small_win(board[y]) == small_win(board[z])) and (small_win(board[x]) != 'F'):
                 return small_x
-        return 'L'
+        return 'F'
 
     ## verifica se o quadrado está todo preenchido e retorna um boolean correspondente
     def small_full(square):
         for i in square:
-            if(i=='L'):
+            if(i=='F'):
                 return False
         return True
 
