@@ -1,6 +1,6 @@
 class UltimateTicTacToe(Game):
 
-    ## variaveis iniciais e de configuração
+    ## variaveis de configuração
     ## win_resul armazena as posições de todas as vitorias
     win_resul = [(0,4,8),(2,4,6)]
     win_resul += [(i, i+3, i+6) for i in range(3)]
