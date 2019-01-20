@@ -18,37 +18,43 @@ class UltimateTicTacToe(Game):
                 for j in range(9)]
         moves_now = self.moves.copy() ## será atualizada de acordo com a ultima jogada
         
+        self.cont = 0
+        
         board = [['F']*9 for _ in range(9)]
         
         self.initial = GameState(to_move='X', utility=0, board=board, moves=moves_now)
 
     ## recebe estado e movimento e retorna um estado com a atualização do movimento
     def result(self, state, move):
-        (x, y) = move
         if move not in state.moves:
             return GameState(to_move=('O' if state.to_move == 'X' else 'X'),
                              utility=self.compute_utility(state.board, move, state.to_move),
                              board=state.board, moves=state.moves)
+        (x, y) = move
         board = state.board.copy()
         board[x][y] = state.to_move
         
-        if(self.small_win(board[x])==state.to_move):
+        if(self.small_win(board[x])):
             for idx in self.moves:
                 (i, j) = idx
                 if (i==x):
+                    print(idx, "idx removido")
+                    print(self.moves)
                     self.moves.remove(idx)
         else:
             ##print(move)
-            ##print(self.moves)
+            print(move, "move removido")
             self.moves.remove(move)
         
         self.last_move = self.next_move(board, y)
         moves_now = self.actions(state)
         
-        print(state.to_move)
+        print(self.moves)
         print(moves_now)
         self.display(state)
         
+        self.cont +=1
+        print(self.cont)
         return GameState(to_move=('O' if state.to_move == 'X' else 'X'),
                          utility=self.compute_utility(board, move, state.to_move),
                          board=board, moves=moves_now)
@@ -158,10 +164,10 @@ class UltimateTicTacToe(Game):
         true, board  = self.player_move(board, move, player)
         if(true and self.small_win(board[x])):
             if(self.big_win(board)):
-                return 20 ## utilidade para grande vitoria
-            return 1 ## utilidade para pequena vitoria
+                return 1000 ## utilidade para grande vitoria
+            return 200 ## utilidade para pequena vitoria
         return 0 ## utilidade caso não haja vitoria
     
     ## verifica se o jogo acabou
     def terminal_test(self, state):
-        return (state.utility % 20) == 0 or len(state.moves) == 0
+        return len(state.moves) == 0
